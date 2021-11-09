@@ -1,0 +1,43 @@
+package infnet.model.controller;
+
+import java.io.IOException;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import infnet.model.domain.Usuario;
+import infnet.model.repository.AcessoRepository;
+
+
+public class AcessoController extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+
+    public AcessoController() {
+
+    }
+
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+//		request.getRequestDispatcher("login.html").forward(request, response);
+	}
+
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		String email = request.getParameter("email");
+		String senha = request.getParameter("senha");
+		
+		
+		Usuario usuario = AcessoRepository.validar(email, senha);
+		
+		if (usuario != null) {
+			request.getRequestDispatcher("home.html").forward(request, response);			
+		} else { 
+			request.setAttribute("msg", "A combinação entre o utilizador e a senha está incorreta");
+			
+			request.getRequestDispatcher("login.jsp").forward(request, response);
+	}
+
+}
+}
+

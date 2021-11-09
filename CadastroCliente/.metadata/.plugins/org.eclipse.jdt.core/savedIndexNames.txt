@@ -1,0 +1,4 @@
+INDEX VERSION 1.131+C:\Users\srris\OneDrive\Área de Trabalho\DEV\004---INFNET\BlocoJava\004 - Desenvolvimento Web com Java EE\TP1\CadastroUsuario\.metadata\.plugins\org.eclipse.jdt.core
+3437302939.index
+2564960907.index
+1865797976.index

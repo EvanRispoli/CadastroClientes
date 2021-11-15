@@ -1,37 +1,63 @@
 package infnet.model.repository;
 
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+
+import infnet.model.conexao.Conexao;
 import infnet.model.domain.Cliente;
 
 public class ClienteRepository {
 	
-	private static List<Cliente> lista;
-	
-	private static void prepara() {
-		if(lista == null) {
-			lista  = new ArrayList<Cliente>();
-		}
-		 
-		
-	}
-	
 	public static boolean incluir (Cliente cliente ) {
 		
 		try {
-			prepara();
-			
-			lista.add(cliente);
+			PreparedStatement ps = Conexao.obterConexao().prepareStatement("INSERT INTO Tdados (nome, endereco, telefone, email) VALUES (?,?,?,?)");
+			ps.setString(1, cliente.getNome());
+			ps.setString(2, cliente.getEndereco());
+			ps.setString(3, cliente.getTelefone());
+			ps.setString(4, cliente.getEmail());
+			ps.execute();
 			
 			return true;
-		} catch (Exception e) {
 			
-			return false;
+		} catch (SQLException e) {
+
+			e.printStackTrace();
 		}
-	}
+		
+		return false;
+		}
+	
 	
 	public static List<Cliente> obterLista() {
+List<Cliente> lista = new ArrayList<Cliente>();
+		
+		try {
+			PreparedStatement ps = Conexao.obterConexao().prepareStatement("SELECT * FROM Tdados ORDER BY nome");
+			
+			ResultSet rs = ps.executeQuery();
+			
+			while(rs.next()) {
+				
+				Cliente cliente = new Cliente(rs.getString("nome"), rs.getString("email"));
+				cliente.setId(rs.getInt("id"));
+				cliente.setEndereco(rs.getString("endereco"));
+				cliente.setTelefone(rs.getString("telefone"));
+				
+				
+				lista.add(cliente);
+				
+			}
+			
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+		}
+		
 		return lista;
 		
 	}

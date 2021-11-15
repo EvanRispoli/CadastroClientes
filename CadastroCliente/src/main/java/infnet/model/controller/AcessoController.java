@@ -1,14 +1,17 @@
 package infnet.model.controller;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import infnet.model.domain.Cliente;
 import infnet.model.domain.Usuario;
 import infnet.model.repository.AcessoRepository;
+import infnet.model.repository.ClienteRepository;
 
 
 public class AcessoController extends HttpServlet {
@@ -31,7 +34,8 @@ public class AcessoController extends HttpServlet {
 		Usuario usuario = AcessoRepository.validar(email, senha);
 		
 		if (usuario != null) {
-			request.getRequestDispatcher("home.html").forward(request, response);			
+			request.setAttribute("listaClientes", ClienteRepository.obterLista());
+			request.getRequestDispatcher("cliente/lista.jsp").forward(request, response);			
 		} else { 
 			request.setAttribute("msg", "A combinação entre o utilizador e a senha está incorreta");
 			

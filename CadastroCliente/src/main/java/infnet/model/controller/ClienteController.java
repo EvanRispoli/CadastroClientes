@@ -1,4 +1,4 @@
-package infnet.model.controller;
+ package infnet.model.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -23,7 +23,14 @@ public class ClienteController extends HttpServlet {
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		request.getRequestDispatcher("home.html").forward(request, response);
+		//request.getRequestDispatcher("/cliente/cadastro.jsp").forward(request, response);
+		
+		if("confirmacao".equals(request.getParameter("tela"))) {
+			request.setAttribute("listaClientes", ClienteRepository.obterLista());
+			request.getRequestDispatcher("cliente/lista.jsp").forward(request, response);
+		} else {
+			request.getRequestDispatcher("cliente/cadastro.jsp").forward(request, response);
+		}
 
 	}
 
@@ -35,12 +42,9 @@ public class ClienteController extends HttpServlet {
 		
 		ClienteRepository.incluir(cliente);
 		
-		List<Cliente> clientes = ClienteRepository.obterLista();
+		
 		
 		request.setAttribute("nomeCliente", cliente.getNome());
-		request.setAttribute("tamanhoLista", clientes.size());
-		request.setAttribute("listaClientes", clientes);
-		
 		request.getRequestDispatcher("cadastro_concluido.jsp").forward(request, response);
 
 	}

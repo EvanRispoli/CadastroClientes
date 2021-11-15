@@ -1,3 +1,5 @@
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+	pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
 <html lang="pt-br">
   <head>
@@ -27,8 +29,8 @@
         </div>
 
         <div class="form-group">
-          <label for="endereco">EndereÃ§o:</label>
-          <input  type="text" class="form-control" id="endereco" placeholder="Informe um endereÃ§o" name="endereco">
+          <label for="endereco">Endereço:</label>
+          <input  type="text" class="form-control" id="endereco" placeholder="Informe um endereço" name="endereco">
         </div>
 
         <div class="form-group">
